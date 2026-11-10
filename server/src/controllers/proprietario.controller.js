@@ -9,7 +9,7 @@ export async function listarProprietarios(req, res){
         `);
 
         return res.json(resultado.rows);
-        
+
     } catch (error) {
         return res.status(500).json({
             mensagem: "Erro ao listar proprietários."
@@ -31,7 +31,7 @@ export async function criarProprietario (req, res){
             [nome, email, telefone, cpf]
         );
 
-        res.status(200).json(resultado.rows[0]);
+        res.status(201).json(resultado.rows[0]);
 
     } catch (error) {
         return res.status(400).json({

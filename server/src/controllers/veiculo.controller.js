@@ -40,7 +40,7 @@ export async function criarVeiculo(req, res){
             [marca, modelo, placa, ano, cor, proprietarioId]
         );
 
-        return res.status(200).json(resultado.rows[0]);
+        return res.status(201).json(resultado.rows[0]);
 
     } catch (error) {
         return res.status(400).json({
