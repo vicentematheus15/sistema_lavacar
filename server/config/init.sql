@@ -1,0 +1,56 @@
+-- Comandos DDL do banco
+CREATE TABLE usuarios (
+id SERIAL PRIMARY KEY,
+nome VARCHAR(120) NOT NULL,
+email VARCHAR(120) NOT NULL UNIQUE,
+senha VARCHAR(255) NOT NULL,
+perfil VARCHAR(20) NOT NULL,
+CHECK (perfil IN ('admin', 'atendente', 'tecnico')),
+"createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+"updatedAt" TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE proprietarios (
+id SERIAL PRIMARY KEY,
+nome VARCHAR(120) NOT NULL,
+email VARCHAR(255) NOT NULL UNIQUE,
+telefone VARCHAR(20) NOT NULL,
+cpf TEXT NOT NULL UNIQUE,
+"createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+"updatedAt"TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE veiculos(
+id SERIAL PRIMARY KEY,
+marca VARCHAR(80) NOT NULL,
+modelo VARCHAR(80) NOT NULL,
+placa VARCHAR(10) NOT NULL UNIQUE,
+ano VARCHAR(4),
+cor VARCHAR(40),
+"proprietarioId" INTEGER NOT NULL
+	REFERENCES proprietarios(id),
+"createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+"updatedAt"TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE ordens_servico(
+id SERIAL PRIMARY KEY,
+"data_entrada" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+descricao VARCHAR(255) NOT NULL,
+tipoServico VARCHAR(20) NOT NULL,
+valor NUMERIC(10,2) NOT NULL DEFAULT 0
+	CHECK(valor > 0),
+status VARCHAR(20) NOT NULL DEFAULT 'aberto'
+	CHECK(
+		status IN(
+			'aberto',
+			'em_andamento',
+			'concluido',
+			'cancelado'
+		)
+	),
+"veiculoId" INTEGER NOT NULL
+	REFERENCES veiculos(id),
+"createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+"updatedAt"TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
