@@ -35,7 +35,7 @@ export async function criarProprietario (req, res){
 
     } catch (error) {
         return res.status(400).json({
-            mensagem: "Não foi possível cadastrar proprietário"
+            mensagem: "Não foi possível cadastrar proprietário."
         });
     }
 };
