@@ -10,11 +10,11 @@ export async function listarVeiculos(req, res){
                 v.placa,
                 v.ano,
                 v.cor,
-                p.id as propietarioId,
+                p.id as proprietario_id,
                 p.nome
             FROM veiculos v
             JOIN proprietarios p
-                ON p.id = v.proprietarioID
+                ON p.id = v.proprietario_id
             ORDER BY v.modelo
             `);
 
@@ -29,15 +29,15 @@ export async function listarVeiculos(req, res){
 
 export async function criarVeiculo(req, res){
     try {
-        const {marca, modelo, placa, ano, cor, proprietarioId} = req.body;
+        const {marca, modelo, placa, ano, cor, proprietario_id} = req.body;
 
         const resultado = await query.pool(`
             INSERT INTO veiculos
-                (marca, modelo, placa, ano, cor, proprietarioId)
+                (marca, modelo, placa, ano, cor, proprietario_id)
             VALUES
                 ($1, $2, $3, $4, $5, $6)
             RETURNING *`
-            [marca, modelo, placa, ano, cor, proprietarioId]
+            [marca, modelo, placa, ano, cor, proprietario_id]
         );
 
         return res.status(201).json(resultado.rows[0]);

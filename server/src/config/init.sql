@@ -1,4 +1,3 @@
--- Comandos DDL do banco
 CREATE TABLE usuarios (
 id SERIAL PRIMARY KEY,
 nome VARCHAR(120) NOT NULL,
@@ -27,7 +26,7 @@ modelo VARCHAR(80) NOT NULL,
 placa VARCHAR(10) NOT NULL UNIQUE,
 ano VARCHAR(4),
 cor VARCHAR(40),
-"proprietarioId" INTEGER NOT NULL
+proprietario_id INTEGER NOT NULL
 	REFERENCES proprietarios(id),
 "createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 "updatedAt"TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -35,7 +34,7 @@ cor VARCHAR(40),
 
 CREATE TABLE ordens_servico(
 id SERIAL PRIMARY KEY,
-"data_entrada" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+data_entrada TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 descricao VARCHAR(255) NOT NULL,
 tipoServico VARCHAR(20) NOT NULL,
 valor NUMERIC(10,2) NOT NULL DEFAULT 0
@@ -49,7 +48,7 @@ status VARCHAR(20) NOT NULL DEFAULT 'aberto'
 			'cancelado'
 		)
 	),
-"veiculoId" INTEGER NOT NULL
+veiculo_id INTEGER NOT NULL
 	REFERENCES veiculos(id),
 "createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 "updatedAt"TIMESTAMPTZ NOT NULL DEFAULT NOW()
