@@ -1,4 +1,5 @@
 import { pool } from "../config/database.js";
+import { cifrarCpf } from "../utils/criptografia.js";
 
 export async function listarProprietarios(req, res){
     try {
@@ -28,7 +29,7 @@ export async function criarProprietario (req, res){
                 ($1, $2, $3, $4)
             RETURNING 
                 id, nome, email, telefone`, 
-            [nome, email, telefone, cpf]
+            [nome, email, telefone, cifrarCpf(cpf)]
         );
 
         res.status(201).json(resultado.rows[0]);
