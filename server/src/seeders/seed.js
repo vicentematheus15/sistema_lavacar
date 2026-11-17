@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import { pool } from '../config/database.js';
+import { cifrarCpf } from '../utils/criptografia.js';
 
 // Dados de demonstração (cenário lava-car)
 const usuarios = [
@@ -52,7 +53,7 @@ const seed = async () => {
                 VALUES ($1, $2, $3, $4)
                 ON CONFLICT (email) DO UPDATE SET email = EXCLUDED.email
                 RETURNING id
-            `, [p.nome, p.email, p.telefone, p.cpf]);
+            `, [p.nome, p.email, p.telefone, cifrarCpf(p.cpf)]);
             idProprietario[p.email] = r.rows[0].id;
         }
 
