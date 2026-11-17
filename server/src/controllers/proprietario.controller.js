@@ -21,13 +21,13 @@ export async function criarProprietario (req, res){
     try {
         const {nome, email, telefone, cpf} = req.body;
 
-        const resultado = await query.pool(`
+        const resultado = await pool.query(`
             INSERT INTO proprietarios
                 (nome, email, telefone, cpf)
             VALUES
                 ($1, $2, $3, $4)
             RETURNING 
-                id, nome, telefone, cpf`, 
+                id, nome, email, telefone`, 
             [nome, email, telefone, cpf]
         );
 
