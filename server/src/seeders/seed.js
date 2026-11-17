@@ -74,10 +74,10 @@ const seed = async () => {
             const veiculoId = idVeiculo[o.veiculoPlaca];
             await client.query(`
                 INSERT INTO ordens_servico (descricao, tipo_servico, valor, status, veiculo_id)
-                SELECT $1, $2, $3, $4, $5
+                SELECT $1::varchar, $2::varchar, $3::numeric, $4::varchar, $5::int
                 WHERE NOT EXISTS (
                     SELECT 1 FROM ordens_servico
-                    WHERE descricao = $1 AND veiculo_id = $5
+                    WHERE descricao = $1::varchar AND veiculo_id = $5::int
                 )
             `, [o.descricao, o.tipo_servico, o.valor, o.status, veiculoId]);
         }
