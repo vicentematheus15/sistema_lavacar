@@ -2,7 +2,7 @@ import { pool } from "../config/database.js";
 
 export async function listarVeiculos(req, res){
     try {
-        const resultado = await query.pool(`
+        const resultado = await pool.query(`
             SELECT
                 v.id,
                 v.marca,
@@ -11,7 +11,7 @@ export async function listarVeiculos(req, res){
                 v.ano,
                 v.cor,
                 p.id as proprietario_id,
-                p.nome
+                p.nome AS proprietario_nome
             FROM veiculos v
             JOIN proprietarios p
                 ON p.id = v.proprietario_id
@@ -31,7 +31,7 @@ export async function criarVeiculo(req, res){
     try {
         const {marca, modelo, placa, ano, cor, proprietario_id} = req.body;
 
-        const resultado = await query.pool(`
+        const resultado = await pool.query(`
             INSERT INTO veiculos
                 (marca, modelo, placa, ano, cor, proprietario_id)
             VALUES
